@@ -54,9 +54,6 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="font-extrabold text-xl tracking-tight text-white flex items-center group-hover:text-indigo-200 transition-colors">
                   CV<span className="text-indigo-400">Dial</span>
                 </span>
-                <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full">
-                  AI Match Pro
-                </span>
               </div>
               <p className="text-xs text-slate-400 hidden sm:block">
                 tailor your resume for any role
@@ -66,8 +63,8 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Score Badge, User Status & Action Controls */}
           <div className="flex items-center space-x-2 sm:space-x-3">
-            {/* Landing page link */}
-            {onGoToLanding && (
+            {/* Landing page link - only shown for guest mode */}
+            {onGoToLanding && (!currentUser || currentUser.isGuest) && (
               <button
                 onClick={onGoToLanding}
                 className="hidden md:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors border border-slate-700/60 cursor-pointer"
@@ -90,40 +87,38 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             )}
 
-            {/* Current User or Guest badge */}
-            {currentUser && (
-              <div className="flex items-center gap-2">
-                {currentUser.isGuest ? (
-                  <div className="flex items-center gap-1.5">
-                    <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-slate-400 bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-lg">
-                      <UserCheck className="w-3 h-3 text-indigo-400" />
-                      <span>Guest Mode</span>
-                    </span>
-                    {onOpenAuth && (
-                      <button
-                        onClick={() => onOpenAuth('signup')}
-                        className="px-2.5 py-1 text-xs font-bold text-indigo-300 hover:text-white bg-indigo-500/20 hover:bg-indigo-600 border border-indigo-500/40 rounded-lg transition-all cursor-pointer"
-                      >
-                        Sign Up
-                      </button>
-                    )}
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2 bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-lg">
-                    <User className="w-3.5 h-3.5 text-indigo-400" />
-                    <span className="text-xs font-bold text-slate-200 hidden sm:inline">{currentUser.name}</span>
-                    {onSignOut && (
-                      <button
-                        onClick={onSignOut}
-                        className="text-slate-400 hover:text-rose-400 p-0.5 transition-colors cursor-pointer"
-                        title="Sign Out"
-                      >
-                        <LogOut className="w-3 h-3" />
-                      </button>
-                    )}
-                  </div>
+            {/* Current User or Auth buttons */}
+            {currentUser && !currentUser.isGuest ? (
+              <div className="flex items-center gap-2 bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-lg">
+                <User className="w-3.5 h-3.5 text-indigo-400" />
+                <span className="text-xs font-bold text-slate-200 hidden sm:inline">{currentUser.name}</span>
+                {onSignOut && (
+                  <button
+                    onClick={onSignOut}
+                    className="text-slate-400 hover:text-rose-400 p-0.5 transition-colors cursor-pointer"
+                    title="Sign Out"
+                  >
+                    <LogOut className="w-3 h-3" />
+                  </button>
                 )}
               </div>
+            ) : (
+              onOpenAuth && (
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <button
+                    onClick={() => onOpenAuth('signin')}
+                    className="px-2.5 py-1 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+                  >
+                    Sign In
+                  </button>
+                  <button
+                    onClick={() => onOpenAuth('signup')}
+                    className="px-3 py-1 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg shadow-sm shadow-indigo-500/20 transition-all cursor-pointer"
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              )
             )}
 
             {matchScore !== undefined && (
