@@ -1,0 +1,62 @@
+{
+  "$schema": "https://raw.githubusercontent.com/firebase/firebase-tools/master/schema/firestore-blueprint.json",
+  "entities": {
+    "UserProfile": {
+      "collection": "users",
+      "description": "User account information and app settings",
+      "fields": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "User email address" },
+        "displayName": { "type": "string", "description": "User full name" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of account creation" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      },
+      "rules": {
+        "read": "request.auth != null && request.auth.uid == resource.data.uid",
+        "create": "request.auth != null && request.auth.uid == request.resource.data.uid",
+        "update": "request.auth != null && request.auth.uid == resource.data.uid",
+        "delete": "request.auth != null && request.auth.uid == resource.data.uid"
+      }
+    },
+    "SavedResume": {
+      "collection": "saved_resumes",
+      "description": "Saved base resumes and tailored variations created by the user",
+      "fields": {
+        "id": { "type": "string", "description": "Unique document ID" },
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID" },
+        "title": { "type": "string", "description": "Title or role label for the resume" },
+        "resumeData": { "type": "string", "description": "JSON stringified ResumeData" },
+        "tailoredResumeData": { "type": "string", "description": "JSON stringified tailored ResumeData if available" },
+        "targetRole": { "type": "string", "description": "Target job title or company" },
+        "atsScore": { "type": "number", "description": "Last recorded ATS match score" },
+        "coverLetter": { "type": "string", "description": "Associated generated cover letter" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of creation" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last modification" }
+      },
+      "rules": {
+        "read": "request.auth != null && request.auth.uid == resource.data.userId",
+        "create": "request.auth != null && request.auth.uid == request.resource.data.userId",
+        "update": "request.auth != null && request.auth.uid == resource.data.userId",
+        "delete": "request.auth != null && request.auth.uid == resource.data.userId"
+      }
+    },
+    "OptimizationActivity": {
+      "collection": "user_activities",
+      "description": "Audit log and history of recent ATS calibrations and rewrites",
+      "fields": {
+        "id": { "type": "string", "description": "Unique activity ID" },
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID" },
+        "actionType": { "type": "string", "description": "Type of action: ats_analysis, resume_tailored, bullet_rewritten, cover_letter_generated" },
+        "jobTitle": { "type": "string", "description": "Job title or company worked on" },
+        "score": { "type": "number", "description": "ATS score achieved" },
+        "timestamp": { "type": "string", "description": "ISO timestamp of action" }
+      },
+      "rules": {
+        "read": "request.auth != null && request.auth.uid == resource.data.userId",
+        "create": "request.auth != null && request.auth.uid == request.resource.data.userId",
+        "update": "request.auth != null && request.auth.uid == resource.data.userId",
+        "delete": "request.auth != null && request.auth.uid == resource.data.userId"
+      }
+    }
+  }
+}

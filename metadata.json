@@ -1,0 +1,6 @@
+{
+  "name": "CVDial",
+  "description": "AI-powered resume tailoring, ATS match analysis, bullet point re-writing, cover letter generation, and export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
