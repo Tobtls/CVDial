@@ -67,7 +67,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, currentUse
           </div>
 
           {/* Nav Actions */}
-          <div className="flex items-center space-x-2.5 sm:space-x-4">
+          <div className="flex items-center space-x-2.5 sm:space-x-3">
             {currentUser && !currentUser.isGuest ? (
               <div className="flex items-center gap-3">
                 <div className="text-right hidden sm:block">
@@ -76,7 +76,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, currentUse
                 </div>
                 <button
                   onClick={() => onEnterApp(currentUser)}
-                  className="py-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-indigo-500/20 transition-colors flex items-center gap-1.5"
+                  className="py-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-indigo-500/20 transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <span>Open Workspace</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -89,16 +89,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, currentUse
                   className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-900 rounded-xl transition-colors cursor-pointer"
                 >
                   Sign In
-                </button>
-
-                <button
-                  onClick={handleGuestProceed}
-                  className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-indigo-300 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer"
-                  title="Test CVDial instantly with sample data without an account"
-                >
-                  <UserCheck className="w-3.5 h-3.5 text-indigo-400" />
-                  <span className="hidden sm:inline">Guest Mode</span>
-                  <span className="sm:hidden">Guest</span>
                 </button>
 
                 <button
